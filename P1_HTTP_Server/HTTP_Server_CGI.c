@@ -14,8 +14,8 @@
 #include "Board_LED.h"
 
 // http_server.c
-extern uint16_t AD_in (uint32_t ch);
-extern uint8_t  get_button (void);
+//extern uint16_t AD_in (uint32_t ch);
+//extern uint8_t  get_button (void);
 
 // net_sys.c
 extern  LOCALM localm[];
@@ -31,7 +31,7 @@ extern struct http_cfg  http_config;
 
 extern bool LEDrun;
 extern bool LCDupdate;
-extern char lcd_text[2][20+1];
+//extern char lcd_text[2][20+1];
 
 // Local variables.
 static uint8_t P2;
@@ -117,18 +117,6 @@ void cgi_process_data (uint8_t code, const char *data, uint32_t len) {
       else if (strcmp (var, "led3=on") == 0) {
         P2 |= 0x08;
       }
-      else if (strcmp (var, "led4=on") == 0) {
-        P2 |= 0x10;
-      }
-      else if (strcmp (var, "led5=on") == 0) {
-        P2 |= 0x20;
-      }
-      else if (strcmp (var, "led6=on") == 0) {
-        P2 |= 0x40;
-      }
-      else if (strcmp (var, "led7=on") == 0) {
-        P2 |= 0x80;
-      }
       else if (strcmp (var, "ctrl=Browser") == 0) {
         LEDrun = false;
       }
@@ -146,14 +134,14 @@ void cgi_process_data (uint8_t code, const char *data, uint32_t len) {
         }
       }
       else if (strncmp (var, "lcd1=", 5) == 0) {
-        // LCD Module line 1 text
+        /*/ LCD Module line 1 text
         strcpy (lcd_text[0], var+5);
-        LCDupdate = true;
+        LCDupdate = true;*/
       }
       else if (strncmp (var, "lcd2=", 5) == 0) {
-        // LCD Module line 2 text
+        /*/ LCD Module line 2 text
         strcpy (lcd_text[1], var+5);
-        LCDupdate = true;
+        LCDupdate = true;*/
       }
     }
   } while (data);
@@ -281,7 +269,7 @@ uint32_t cgi_script (const char *env, char *buf, uint32_t buflen, uint32_t *pcgi
       break;
 
     case 'f':
-      // LCD Module control from 'lcd.cgi'
+      /*/ LCD Module control from 'lcd.cgi'
       switch (env[2]) {
         case '1':
           len = sprintf (buf, &env[4], lcd_text[0]);
@@ -289,11 +277,11 @@ uint32_t cgi_script (const char *env, char *buf, uint32_t buflen, uint32_t *pcgi
         case '2':
           len = sprintf (buf, &env[4], lcd_text[1]);
           break;
-      }
+      }*/
       break;
 
     case 'g':
-      // AD Input from 'ad.cgi'
+      /*/ AD Input from 'ad.cgi'
       switch (env[2]) {
         case '1':
           adv = AD_in (0);
@@ -306,19 +294,19 @@ uint32_t cgi_script (const char *env, char *buf, uint32_t buflen, uint32_t *pcgi
           adv = (adv * 100) / 4096;
           len = sprintf (buf, &env[4], adv);
           break;
-      }
+      }*/
       break;
 
     case 'x':
-      // AD Input from 'ad.cgx'
+      /*/ AD Input from 'ad.cgx'
       adv = AD_in (0);
       len = sprintf (buf, &env[1], adv);
-      break;
+      break;*/
 
     case 'y':
-      // Button state from 'button.cgx'
+      /*/ Button state from 'button.cgx'
       len = sprintf (buf, "<checkbox><id>button%c</id><on>%s</on></checkbox>",
-                     env[1], (get_button () & (1 << (env[1]-'0'))) ? "true" : "false");
+                     env[1], (get_button () & (1 << (env[1]-'0'))) ? "true" : "false");*/
       break;
   }
   return (len);

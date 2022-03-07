@@ -12,24 +12,24 @@
 
 #include "Board_GLCD.h"
 #include "GLCD_Config.h"
-#include "Board_LED.h"
+#include "LED_LPC1768.h"
 #include "Board_Buttons.h"
 #include "Board_ADC.h"
 
-extern GLCD_FONT GLCD_Font_6x8;
-extern GLCD_FONT GLCD_Font_16x24;
+//extern GLCD_FONT GLCD_Font_6x8;
+//extern GLCD_FONT GLCD_Font_16x24;
 
 bool LEDrun;
 bool LCDupdate;
-char lcd_text[2][20+1];
+//char lcd_text[2][20+1];
 
 static void BlinkLed (void const *arg);
-static void Display (void const *arg);
+//static void Display (void const *arg);
 
 osThreadDef(BlinkLed, osPriorityNormal, 1, 0);
-osThreadDef(Display, osPriorityNormal, 1, 0);
+//osThreadDef(Display, osPriorityNormal, 1, 0);
 
-/// Read analog inputs
+/*// Read analog inputs
 uint16_t AD_in (uint32_t ch) {
   int32_t val = 0;
 
@@ -55,11 +55,11 @@ void dhcp_client_notify (uint32_t if_num,
     sprintf (lcd_text[1],"%s", ip4_ntoa (val));
     LCDupdate = true;
   }
-}
+}*/
 
 /*----------------------------------------------------------------------------
   Thread 'Display': LCD display handler
- *---------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------------*//*
 static void Display (void const *arg) {
   char lcd_buf[20+1];
 
@@ -85,14 +85,13 @@ static void Display (void const *arg) {
     }
     osDelay (250);
   }
-}
+}*/
 
 /*----------------------------------------------------------------------------
   Thread 'BlinkLed': Blink the LEDs on an eval board
  *---------------------------------------------------------------------------*/
 static void BlinkLed (void const *arg) {
-  const uint8_t led_val[16] = { 0x48,0x88,0x84,0x44,0x42,0x22,0x21,0x11,
-                                0x12,0x0A,0x0C,0x14,0x18,0x28,0x30,0x50 };
+  const uint8_t led_val[7] = { 0x01,0x02,0x04,0x08,0x04,0x02,0x01};
   int cnt = 0;
 
   LEDrun = true;
@@ -113,12 +112,12 @@ static void BlinkLed (void const *arg) {
  *---------------------------------------------------------------------------*/
 int main (void) {
   LED_Initialize     ();
-  Buttons_Initialize ();
-  ADC_Initialize     ();
+ // Buttons_Initialize ();
+  //ADC_Initialize     ();
   net_initialize     ();
 
   osThreadCreate (osThread(BlinkLed), NULL);
-  osThreadCreate (osThread(Display), NULL);
+//  osThreadCreate (osThread(Display), NULL);
 
   while(1) {
     net_main ();
