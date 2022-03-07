@@ -408,6 +408,21 @@
               <FileType>1</FileType>
               <FilePath>.\LED_LPC1768.c</FilePath>
             </File>
+            <File>
+              <FileName>LCD_LPC1768.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD_LPC1768.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_LPC1768.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCD_LPC1768.c</FilePath>
+            </File>
+            <File>
+              <FileName>Arial12x12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Arial12x12.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -938,6 +953,21 @@
               <FileName>LED_LPC1768.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\LED_LPC1768.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_LPC1768.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD_LPC1768.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_LPC1768.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCD_LPC1768.c</FilePath>
+            </File>
+            <File>
+              <FileName>Arial12x12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Arial12x12.h</FilePath>
             </File>
           </Files>
         </Group>

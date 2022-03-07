@@ -11,7 +11,7 @@
 #include <string.h>
 #include "rl_net.h"
 #include "rl_net_lib.h"
-#include "Board_LED.h"
+#include "LED_LPC1768.h"
 
 // http_server.c
 //extern uint16_t AD_in (uint32_t ch);
@@ -31,7 +31,7 @@ extern struct http_cfg  http_config;
 
 extern bool LEDrun;
 extern bool LCDupdate;
-//extern char lcd_text[2][20+1];
+extern char lcd_text[2][20+1];
 
 // Local variables.
 static uint8_t P2;
@@ -134,14 +134,14 @@ void cgi_process_data (uint8_t code, const char *data, uint32_t len) {
         }
       }
       else if (strncmp (var, "lcd1=", 5) == 0) {
-        /*/ LCD Module line 1 text
+        // LCD Module line 1 text
         strcpy (lcd_text[0], var+5);
-        LCDupdate = true;*/
+        LCDupdate = true;
       }
       else if (strncmp (var, "lcd2=", 5) == 0) {
-        /*/ LCD Module line 2 text
+        // LCD Module line 2 text
         strcpy (lcd_text[1], var+5);
-        LCDupdate = true;*/
+        LCDupdate = true;
       }
     }
   } while (data);
@@ -269,7 +269,7 @@ uint32_t cgi_script (const char *env, char *buf, uint32_t buflen, uint32_t *pcgi
       break;
 
     case 'f':
-      /*/ LCD Module control from 'lcd.cgi'
+      // LCD Module control from 'lcd.cgi'
       switch (env[2]) {
         case '1':
           len = sprintf (buf, &env[4], lcd_text[0]);
@@ -277,7 +277,7 @@ uint32_t cgi_script (const char *env, char *buf, uint32_t buflen, uint32_t *pcgi
         case '2':
           len = sprintf (buf, &env[4], lcd_text[1]);
           break;
-      }*/
+      }
       break;
 
     case 'g':

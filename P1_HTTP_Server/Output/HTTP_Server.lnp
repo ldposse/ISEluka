@@ -3,6 +3,7 @@
 ".\output\http_server_cgi.o"
 ".\output\web.o"
 ".\output\led_lpc1768.o"
+".\output\lcd_lpc1768.o"
 ".\output\adc_mcb1700.o"
 ".\output\glcd_fonts.o"
 ".\output\glcd_mcb1700.o"

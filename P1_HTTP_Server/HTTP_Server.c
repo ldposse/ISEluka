@@ -10,8 +10,8 @@
 #include "cmsis_os.h"                   /* CMSIS RTOS definitions             */
 #include "rl_net.h"                     /* Network definitions                */
 
-#include "Board_GLCD.h"
-#include "GLCD_Config.h"
+#include "LCD_LPC1768.h"
+//#include "GLCD_Config.h"
 #include "LED_LPC1768.h"
 #include "Board_Buttons.h"
 #include "Board_ADC.h"
@@ -21,13 +21,13 @@
 
 bool LEDrun;
 bool LCDupdate;
-//char lcd_text[2][20+1];
+char lcd_text[2][20+1];
 
 static void BlinkLed (void const *arg);
-//static void Display (void const *arg);
+static void Display (void const *arg);
 
 osThreadDef(BlinkLed, osPriorityNormal, 1, 0);
-//osThreadDef(Display, osPriorityNormal, 1, 0);
+osThreadDef(Display, osPriorityNormal, 1, 0);
 
 /*// Read analog inputs
 uint16_t AD_in (uint32_t ch) {
@@ -59,17 +59,11 @@ void dhcp_client_notify (uint32_t if_num,
 
 /*----------------------------------------------------------------------------
   Thread 'Display': LCD display handler
- *---------------------------------------------------------------------------*//*
+ *---------------------------------------------------------------------------*/
 static void Display (void const *arg) {
   char lcd_buf[20+1];
 
-  GLCD_Initialize         ();
-  GLCD_SetBackgroundColor (GLCD_COLOR_BLUE);
-  GLCD_SetForegroundColor (GLCD_COLOR_WHITE);
-  GLCD_ClearScreen        ();
-  GLCD_SetFont            (&GLCD_Font_16x24);
-  GLCD_DrawString         (0, 1*24, "       MDK-MW       ");
-  GLCD_DrawString         (0, 2*24, "HTTP Server example ");
+
 
   sprintf (lcd_text[0], "");
   sprintf (lcd_text[1], "Waiting for DHCP");
@@ -77,15 +71,17 @@ static void Display (void const *arg) {
 
   while(1) {
     if (LCDupdate == true) {
+			LimpiarBuffer();
       sprintf (lcd_buf, "%-20s", lcd_text[0]);
-      GLCD_DrawString (0, 5*24, lcd_buf);
+      EscribeLinea1  (lcd_buf);
       sprintf (lcd_buf, "%-20s", lcd_text[1]);
-      GLCD_DrawString (0, 6*24, lcd_buf);
+      EscribeLinea2 ( lcd_buf);
       LCDupdate = false;
+			wr_LCD();
     }
     osDelay (250);
   }
-}*/
+}
 
 /*----------------------------------------------------------------------------
   Thread 'BlinkLed': Blink the LEDs on an eval board
@@ -112,12 +108,14 @@ static void BlinkLed (void const *arg) {
  *---------------------------------------------------------------------------*/
 int main (void) {
   LED_Initialize     ();
+	LCD_Initialize();
+	LCD_Reset();
  // Buttons_Initialize ();
   //ADC_Initialize     ();
   net_initialize     ();
 
   osThreadCreate (osThread(BlinkLed), NULL);
-//  osThreadCreate (osThread(Display), NULL);
+  osThreadCreate (osThread(Display), NULL);
 
   while(1) {
     net_main ();
